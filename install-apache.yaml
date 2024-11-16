@@ -8,3 +8,10 @@
       apt:
         name: nmap
         state: latest
+      when: ansible_distribution == "Ubuntu"
+
+   -  name: install vlc
+      community.general.snap:
+        name: vlc
+        state: latest
+      when: ansible_distribution in ["Debian", "Ubuntu"]
