@@ -4,9 +4,12 @@
    become: true
    tasks:
 
-   -  name: install apache
+   -  name: install more than one packages for ubuntu
       apt:
-        name: nmap
+        name:
+           - nmap
+           - apache2
+           - ufw
         state: latest
       when: ansible_distribution == "Ubuntu"
 
