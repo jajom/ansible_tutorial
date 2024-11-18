@@ -1,0 +1,26 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: create bethany user
+    tags: always
+    user:
+      name: bethany
+      groups: root
+
+  - name: add ssh key for bethany
+    tags: always
+    authorized_key:
+       user: bethany
+       key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLQ9LuKr1UuO88Uk7xbDPm2lUhKIaA/MonKEqk135Sh ansible keypass"
+
+  - name: add sudoers file for bethany
+    tags: always
+    copy:
+      src: sudoer_bethany
+      dest: /etc/sudoers.d/bethany
+      owner: root
+      group: root
+      mode: 0440
