@@ -8,7 +8,8 @@
      tags: always
      apt:
        upgrade: dist
-
+       update_cache: yes
+     changed_when: false
 
    -  name: install more than one packages for ubuntu
       tags: ubuntu,nmap.apache,ufw
@@ -19,6 +20,7 @@
            - ufw
         state: latest
       when: ansible_distribution == "Ubuntu"
+
    - name: copy default html file for site
      tags: apache
      copy:
@@ -35,6 +37,24 @@
         name: vlc
         state: latest
       when: ansible_distribution in ["Debian", "Ubuntu"]
+
+- hosts: workstation
+  become: true
+  tasks:
+  - name: install unzip
+    package:
+      name: unzip
+
+  - name: install terraform
+    unarchive:
+      src: https://releases.hashicorp.com/terraform/0.12.28/terraform_0.12.28_linux_amd64.zip
+      dest: /usr/local/bin
+      remote_src: yes
+      mode: 0755
+      owner: root
+      group: root
+
+
 - hosts: Web_Server
   become: true
   tasks:
@@ -44,3 +64,18 @@
       name: samba
       state: latest
     when: ansible_distribution == "Ubuntu"
+
+  - name: install apache2
+    apt:
+      name:
+        - apache2
+
+      state: latest 
+#This starts and enable the service
+  - name: start apache service
+    tags: apache
+    service:
+      name: apache2
+      state: started
+      enabled: yes 
+    when: ansible_distribution == "Ubuntu"      
