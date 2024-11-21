@@ -1,0 +1,16 @@
+- name: Install the package
+  tags: apache,ubuntu
+  apt:
+    name:
+      - apache2
+      - nmap
+    state: latest
+  when: ansible_distribution == "Ubuntu"
+
+- name: start and enable services apache
+  tags: ubuntu,apache
+  service:
+    name: apache2
+    state: started
+    enabled: yes
+  when: ansible_distribution == "Ubuntu"

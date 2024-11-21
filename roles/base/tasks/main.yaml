@@ -1,0 +1,4 @@
+- name: add ssh key for bethany
+  authorized_key:
+    user: bethany
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLQ9LuKr1UuO88Uk7xbDPm2lUhKIaA/MonKEqk135Sh ansible keypass"
