@@ -1,0 +1,9 @@
+---
+- hosts: client
+  become: true
+  tasks:
+  - name: create bethany user
+    tags: always
+    user:
+      name: bethany
+      group: root
